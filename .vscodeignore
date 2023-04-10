@@ -11,3 +11,11 @@ vsc-extension-quickstart.md
 **/.eslintrc.json
 **/*.map
 **/*.ts
+
+DaanV2.Hue/**
+
+.github
+.nvmrc
+*.code-workspace
+jest.config.js
+makefile

@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../DaanV2.Hue"
+    }
+  ],
+  "settings": {
+    "typescript.tsc.autoDetect": "off"
+  }
+}

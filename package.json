@@ -1,16 +1,33 @@
 {
-  "name": "hue-am-i-doing",
-  "displayName": "Hue-Am-I-Doing",
   "description": "An extension that connects vscode to a hue bridge",
+  "displayName": "Hue Am I Doing",
+  "icon": "resources/icon.png",
+  "license": "BSD-3-Clause",
+  "main": "./dist/extension.js",
+  "name": "daanv2-hue-am-i-doing",
+  "pricing": "Free",
+  "publisher": "DaanV2",
   "version": "0.0.1",
+  "author": {
+    "name": "DaanV2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DaanV2/Vscode-Hue-Am-I-Doing"
+  },
   "engines": {
-    "vscode": "^1.76.0"
+    "vscode": "^1.77.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Visualization"
   ],
-  "activationEvents": [],
-  "main": "./dist/extension.js",
+  "activationEvents": [
+    "*"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
@@ -20,21 +37,81 @@
     "lint": "eslint src --ext ts",
     "test": "jest"
   },
+  "dependencies": {
+    "@daanv2/hue": "^1.0.19"
+  },
   "devDependencies": {
     "@types/glob": "^8.1.0",
-    "@types/node": "16.x",
-    "@types/vscode": "^1.76.0",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^16.18.23",
+    "@types/vscode": "^1.77.0",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
     "@vscode/test-electron": "^2.3.0",
-    "eslint": "^8.36.0",
-    "glob": "^8.1.0",
+    "eslint": "^8.38.0",
+    "glob": "^10.0.0",
     "jest": "^29.5.0",
-    "ts-jest": "^29.0.5",
+    "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.2",
-    "typescript": "^4.9.5",
-    "webpack": "^5.76.3",
+    "typescript": "^5.0.4",
+    "webpack": "^5.78.0",
     "webpack-cli": "^5.0.1"
   },
-  "contributes": {}
+  "files": [
+    "resources/**/*"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "title": "Add New Hue Bridge",
+        "category": "Hue Am I Doing",
+        "command": "hue-am-i-doing.new-bridge",
+        "icon": "$(diff-insert)"
+      },
+      {
+        "title": "Configure Hue Bridge",
+        "category": "Hue Am I Doing",
+        "command": "hue-am-i-doing.configure-bridge",
+        "icon": "$(settings-more-action)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "hue-am-i-doing.new-bridge",
+          "when": "view == hue-am-i-doing-bridges-view",
+          "group": "navigation"
+        },
+        {
+          "command": "hue-am-i-doing.configure-bridge",
+          "when": "view == hue-am-i-doing-bridges-view",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "hue-am-i-doing.configure-bridge",
+          "when": "view == hue-am-i-doing-bridges-view",
+          "group": "inline"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "hue-am-i-doing-activity",
+          "title": "Hue Am I Doing",
+          "icon": "resources/icon-cutout.svg"
+        }
+      ]
+    },
+    "views": {
+      "hue-am-i-doing-activity": [
+        {
+          "id": "hue-am-i-doing-bridges-view",
+          "name": "Bridges"
+        }
+      ]
+    }
+  }
 }

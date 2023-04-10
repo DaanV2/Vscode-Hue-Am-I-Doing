@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <title>Hue-Am-I-Doing</title>
+  <desc></desc>
+  <defs></defs>
+  <mask id="lamp-mask">
+    <rect x="0" y="0" width="32" height="32" fill="white" />
+    <ellipse ry="10" rx="6" id="svg_2" cy="12" cx="16.1497" stroke-width="0" stroke="#000" fill="black" />
+    <ellipse ry="6" rx="4" id="svg_2" cy="16" cx="16.1497" stroke-width="0" stroke="#000" fill="black"/>
+    <rect id="svg_3" height="16" width="4.79042" y="10.76048" x="13.75449" stroke-width="0" stroke="#000" fill="black"/>
+  </mask>
+
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g fill="darkgray">
+      <path id="svg_8" d="m0,5c0,-2.71689 2.28311,-5 5,-5l22,0c2.71689,0 5,2.28311 5,5l0,22c0,2.71689 -2.28311,5 -5,5l-22,0c-2.71689,0 -5,-2.28311 -5,-5l0,-22z" opacity="undefined" stroke-width="0" stroke="#000" fill="#363636"
+       mask="url(#lamp-mask)"/>
+      <path stroke="#000" id="svg_8" d="m0,4.35434c0,-2.36605 2.28311,-4.35434 5,-4.35434l22,0c2.71689,0 5,1.98829 5,4.35434l0,19.15909c0,2.36605 -2.28311,4.35434 -5,4.35434l-22,0c-2.71689,0 -5,-1.98829 -5,-4.35434l0,-19.15909z" opacity="undefined" stroke-width="0" fill="#585858"
+      mask="url(#lamp-mask)"/>
+    </g>
+  </g>
+</svg>
