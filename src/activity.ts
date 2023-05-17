@@ -75,22 +75,22 @@ export class ActivityMonitor {
       case "onBad":
         this._statusBarItem.text = "💡 Bad Time";
         this._statusBarItem.backgroundColor = new vscode.ThemeColor("statusBarItem.warningBackground");
-        this._statusBarItem.tooltip = "You're having a bad time, huh?";
+        this._statusBarItem.tooltip = "Hue Am I Doing?\nYou're having a bad time, huh?";
         break;
       case "onNothing":
         this._statusBarItem.text = "💡 Chillin";
         this._statusBarItem.backgroundColor = undefined;
-        this._statusBarItem.tooltip = "Just chillin";
+        this._statusBarItem.tooltip = "Hue Am I Doing?\nJust chillin";
         break;
       case "onOops":
         this._statusBarItem.text = "💡 Oopsie";
         this._statusBarItem.backgroundColor = new vscode.ThemeColor("statusBarItem.errorBackground");
-        this._statusBarItem.tooltip = "Oopsie, something went wrong";
+        this._statusBarItem.tooltip = "Hue Am I Doing?\nOopsie, something went wrong";
         break;
       case "onVibin":
         this._statusBarItem.text = "💡 Vibin";
         this._statusBarItem.backgroundColor = undefined;
-        this._statusBarItem.tooltip = "Just vibin and coding";
+        this._statusBarItem.tooltip = "Hue Am I Doing?\nJust vibin and coding";
         break;
     }
 
