@@ -6,3 +6,4 @@ When you vibin while coding, you might want your surroundings to reflect how you
 Lots of errors? Maybe a nice calming blue. A rave party when you're churning out code. Terminal has an error? Red.
 
 This extension connects your visual studio code to your Hue lights.
+Allowing multiple bridges and lights to be connected to. as well a configurable color scheme. per activity.
