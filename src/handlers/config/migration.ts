@@ -5,14 +5,16 @@ import { BridgeHandler } from "../bridge";
  * @param bridge The bridge to migrate
  * @returns True if the config was migrated, false otherwise
  */
-export async function migrateConfig(bridge: BridgeHandler) : Promise<boolean> {
+export async function migrateConfig(bridge: BridgeHandler): Promise<boolean> {
   let result = false;
 
   //Get the name
   if (bridge.config.name === undefined) {
-    const config = await bridge.app.getConfig();
-    bridge.config.name = config.name;
-    result = true;
+    try {
+      const config = await bridge.app.getConfig();
+      bridge.config.name = config.name;
+      result = true;
+    } catch (e) {}
   }
 
   return result;
