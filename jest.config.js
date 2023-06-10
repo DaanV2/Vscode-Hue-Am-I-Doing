@@ -2,5 +2,9 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testNamePattern: 'test',
+  testMatch: ['**/*.test.ts'],
+  reporters: [
+    'default',
+    ['github-actions', {silent: false}]
+  ],
 };

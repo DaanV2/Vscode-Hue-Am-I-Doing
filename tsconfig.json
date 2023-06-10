@@ -7,7 +7,6 @@
     "strict": false,
     "ignoreDeprecations": "5.0",
     "noImplicitUseStrict": true,
-    "rootDirs": ["src", "test"]
   },
   "include": ["src", "test", "pages"]
 }
