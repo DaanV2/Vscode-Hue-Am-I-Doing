@@ -3,6 +3,7 @@ import { ConfigHandler } from "./handlers";
 import { ActivityHandler } from "./handlers/activity";
 import { BRIDGE_CONFIG_KEY, BridgeConfig } from "./types/bridgeConfig";
 import { Icons } from "./assets/icons";
+import { migrateConfig } from "./handlers/config/migration";
 
 export class ExtensionController {
   public config: ConfigHandler;
@@ -29,7 +30,16 @@ export class ExtensionController {
   public async setup(): Promise<void> {
     this.activity.on("afterActivity", () => this.saveConfig());
 
+    //Migration of config
+    this.activity.on("onBridgedAdded", async (parent, bridge) => {
+      if (await migrateConfig(bridge)) {
+        this.saveConfig();
+      }
+    });
+
+
     const config = await this.config.get<BridgeConfig[]>(BRIDGE_CONFIG_KEY);
+
     this.activity.setConfig(config ?? []);
   }
 

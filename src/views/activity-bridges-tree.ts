@@ -49,7 +49,7 @@ export class BridgesTreeView implements vscode.TreeDataProvider<BridgeItem> {
 
     return this.ext.activity.apps.map((a) => {
       return {
-        bridge: a.config.bridgeId,
+        bridge: a.config.name ?? a.config.bridgeId,
         state: a.config.state,
         id: a.config.bridgeId,
         internalipaddress: a.config.ip,

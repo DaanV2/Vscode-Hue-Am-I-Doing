@@ -13,15 +13,17 @@ export class ConfigHandler {
   public async get<T>(key: string): Promise<T | undefined> {
     console.debug(`Loading config ${key}`);
 
-    return this.secrets.get(key).then((out) => {
-      if (out) {
-        try {
-          return JSON.parse(out) as T;
-        } catch (e) {}
-      }
-
+    const secret = await this.secrets.get(key);
+    if (!secret) {
       return undefined;
-    });
+    }
+
+    const data = JSON.parse(secret) as T;
+    if (!data) {
+      return undefined;
+    }
+
+    return data;
   }
 
   /** Store a config in the secret storage

@@ -9,6 +9,7 @@ export interface BridgeConfig {
   appKey: string;
   bridgeId: string;
   ip: string;
+  name?: string;
   lastSeen: string;
   state: BridgeStates;
 }

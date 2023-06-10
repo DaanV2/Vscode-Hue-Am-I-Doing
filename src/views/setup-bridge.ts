@@ -83,25 +83,25 @@ export class SetupBridgeView extends BaseWebview {
     this.message = "Bridge setup connected!";
 
     //Grabbing key and id
-    this.app = new Application(this.bridge, appKey);
+    try {
+      this.app = new Application(this.bridge, appKey);
 
-    //Setup bridge in config
-    return this.app
-      .setup()
-      .then(() => {
-        const config = BridgeConfig.create(this.app);
-        this.controller.activity.addConfig(config);
+      const config = BridgeConfig.create(this.app);
 
-        vscode.commands.executeCommand(ConfigureBridgeCommand.id, config.bridgeId);
-        this.dispose();
-        return true;
-      })
-      .catch((e) => {
-        this.message = e.message;
-        vscode.window.showErrorMessage("Failed to setup bridge: " + e.message);
-        console.info("Failed to setup bridge: ", e);
-        return false;
-      });
+      const bridgeConfig = await this.app.getConfig();
+      config.name = bridgeConfig.name;
+
+      this.controller.activity.addConfig(config);
+
+      vscode.commands.executeCommand(ConfigureBridgeCommand.id, config.bridgeId);
+      this.dispose();
+    }
+    catch (e) {
+      this.message = e.message;
+      vscode.window.showErrorMessage("Failed to setup bridge: " + e.message);
+      console.info("Failed to setup bridge: ", e);
+      return false;
+    }
   }
 
   getSetupWebviewContent(webview: vscode.Webview) {
