@@ -118,7 +118,7 @@ export class ConfigureBridgeView extends BaseWebview {
         <div class="top">
           <div class="headers">
             <h1>Configure Bridges</h1>
-            <h2>Bridge: ${bridge.data.app.bridge.bridgeId}</h2>
+            <h2>Bridge: ${bridge.data.config.name} ${bridge.data.app.bridge.bridgeId}</h2>
             <p>last seen: ${bridge.data.config.lastSeen}</p>
             <p>state: ${bridge.data.config.state}</p>
           </div>

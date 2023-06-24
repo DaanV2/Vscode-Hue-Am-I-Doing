@@ -4,6 +4,7 @@ import { ConfigureBridgeView } from "../views/configure-bridge";
 import { ConfigureSelectBridgeView } from "../views/configure-select-bridge";
 
 interface BridgeContainer {
+  id: string;
   bridge: string;
 }
 
@@ -18,7 +19,7 @@ export namespace ConfigureBridgeCommand {
       }
 
       if (typeof bridgeId === "object") {
-        bridgeId = bridgeId.bridge;
+        bridgeId = bridgeId.id;
       }
 
       return ConfigureBridgeView.display(controller, bridgeId);

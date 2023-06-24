@@ -3,16 +3,17 @@ import { WebviewPanel } from "vscode";
 import { BaseWebview } from "./webview";
 import { ExtensionController } from "../extension";
 import { ConfigureBridgeView } from "./configure-bridge";
+import { BridgeHandler } from "../handlers";
 
 export class ConfigureSelectBridgeView extends BaseWebview {
   public readonly controller: ExtensionController;
-  public bridges: string[];
+  public bridges: BridgeHandler[];
 
   constructor(controller: ExtensionController) {
     super("configure-select-bridge", "Select bridge for configuration", controller);
     this.controller = controller;
 
-    this.bridges = this.controller.activity.apps.map((b) => b.config.bridgeId);
+    this.bridges = this.controller.activity.apps;
   }
 
   update(panel: WebviewPanel): void {
@@ -53,7 +54,7 @@ export class ConfigureSelectBridgeView extends BaseWebview {
         <h2>Select Bridges</h1>
 
         <ul>
-          ${this.bridges.map((b) => `<li class="bridge" bridge="${b}">${b}</li>`).join("")}
+          ${this.bridges.map((b) => `<li class="bridge" bridge="${b.app.bridge.bridgeId}">${b.app.bridge.bridgeId} - ${b.config.name}</li>`).join("")}
         </ul>
       </div>
 
