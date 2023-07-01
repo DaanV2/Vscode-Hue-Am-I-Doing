@@ -1,4 +1,4 @@
-name: "tagged-release"
+name: 📑 Release Page
 
 permissions: write-all
 on:
@@ -8,12 +8,12 @@ on:
 
 jobs:
   tagged-release:
-    name: "Tagged Release"
+    name: 📑 Release Page
     runs-on: "ubuntu-latest"
-
     steps:
-      - name: Create page
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: 📑 Create Release Page
+        uses: ncipollo/release-action@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          generateReleaseNotes: true
+          makeLatest: true
