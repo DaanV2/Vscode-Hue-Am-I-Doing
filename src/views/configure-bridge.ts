@@ -50,18 +50,6 @@ export class ConfigureBridgeView extends BaseWebview {
     });
   }
 
-  private getActivity(name: string): ActivityElement | undefined {
-    // For each activity in the activities object, check if the name matches the activity name
-    for (const activity in this.activities) {
-      const item = this.activities[activity] as ActivityElement;
-      if (item.name === name) {
-        return item;
-      }
-    }
-
-    return undefined;
-  }
-
   setup(panel: WebviewPanel): void {
     panel.webview.onDidReceiveMessage((message) => {
       this.view.commands.incoming(message);
@@ -105,7 +93,6 @@ export class ConfigureBridgeView extends BaseWebview {
     <body>
       <style nonce="${this.nonce}">
         ${ActivityElement.style()}
-
         .top {
           display: flex;
           flex-direction: row;
@@ -113,14 +100,53 @@ export class ConfigureBridgeView extends BaseWebview {
         .separator {
           border-top: 1px dotted #ffffff;
         }
+        .bridge-table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        .property {
+          font-weight: bold;
+        }
+        select {
+          background-color: transparent;
+          color: var(--vscode-editor-foreground);
+        }
+        option {
+          background-color: var(--vscode-editor-background);
+          color: var(--vscode-editor-foreground);
+        }
       </style>
       <div>
         <div class="top">
           <div class="headers">
             <h1>Configure Bridges</h1>
-            <h2>Bridge: ${bridge.data.config.name} ${bridge.data.app.bridge.bridgeId}</h2>
-            <p>last seen: ${bridge.data.config.lastSeen}</p>
-            <p>state: ${bridge.data.config.state}</p>
+            <table class="bridge-table">
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <td class="property">Bridge</td>
+                <td>  </td>
+                <td>${bridge.data.config.name}</td>
+              </tr>
+              <tr>
+                <td class="property">Bridge Id</td>
+                <td>  </td>
+                <td>${bridge.data.app.bridge.bridgeId}</td>
+              </tr>
+              <tr>
+                <td class="property">Last seen</td>
+                <td>  </td>
+                <td>${formatDateTime(bridge.data.config.lastSeen)}</td>
+              <tr>
+              </tr>
+                <td class="property">State</td>
+                <td>  </td>
+                <td>${bridge.data.config.state}</td>
+              </tr>
+            </table>
           </div>
         </div>
         <hr class="separator" />
@@ -149,10 +175,15 @@ export class ConfigureBridgeView extends BaseWebview {
     }
 
     const bridgeConfig = await bridgeData.getReference();
-
     const view = new ConfigureBridgeView(controller, bridgeData, bridgeConfig);
     view.show();
 
     return view;
   }
+}
+
+
+function formatDateTime(date: string) {
+  const d = new Date(date);
+  return d.toLocaleString();
 }

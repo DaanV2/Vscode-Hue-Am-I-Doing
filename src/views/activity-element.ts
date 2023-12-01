@@ -40,7 +40,7 @@ export class ActivityElement extends BaseElement<ViewControllerContext<ActivityE
       this.action = {
         timeline: [],
         reference: Reference.from(
-          view.context.bridge.references.lights[0] ?? {
+          view.context.bridge.references.light[0] ?? {
             id: "",
             type: "light",
           }
@@ -122,27 +122,19 @@ export class ActivityElement extends BaseElement<ViewControllerContext<ActivityE
   }
 
   public getReferences(type?: ReferenceType) {
-    switch (type ?? this._type) {
-      default:
-      case "light":
-        return this.view.context.bridge.references.lights;
-      case "room":
-        return this.view.context.bridge.references.rooms;
-      case "zone":
-        return this.view.context.bridge.references.zones;
-    }
+    return this.view.context.bridge.references[type ?? this._type];
   }
 
   public determineTypeByReference(reference: Reference): ReferenceType {
     //Search rooms & zones for the group
     if (reference.rtype === "grouped_light") {
-      for (const room of this.view.context.bridge.references.rooms) {
+      for (const room of this.view.context.bridge.references.room) {
         if (GroupConfig.hasGroup(room, this.action.reference)) {
           return "room";
         }
       }
 
-      for (const zone of this.view.context.bridge.references.zones) {
+      for (const zone of this.view.context.bridge.references.zone) {
         if (GroupConfig.hasGroup(zone, this.action.reference)) {
           return "zone";
         }
@@ -169,52 +161,61 @@ export class ActivityElement extends BaseElement<ViewControllerContext<ActivityE
     return `
     <div ${this.defaultAttributes()} class="activity-element">
       <h3>${this.name}</h3>
+      <table class="activity-settings">
+        <tbody>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td>
+              <label for="enable-button" class="input-label">Enable activity</label>
+            </td>
+            <td></td>
+            <td>
+              <input ${this.defaultAttributes()} type="checkbox" class="enable-button" ${this.enabled ? "checked" : ""}/>
+            </td>
+          </tr>
+          <tr ${this.enabled ? "" : "hidden" }>
+            <td>
+              <label for="activity-name" class="input-label">Type of object</label>
+            </td>
+            <td></td>
+            <td>
+              <select ${this.defaultAttributes()} class="select-type-reference">
+                <option value="light" ${this._type === "light" ? "selected" : ""}>Lamps</option>
+                <option value="room" ${this._type === "room" ? "selected" : ""}>Rooms</option>
+                <option value="zone" ${this._type === "zone" ? "selected" : ""}>Zones</option>
+              </select>
+            </td>
+          </tr>
+          ${this.enabled ? this.renderSettings(this._type) : ""}
+          ${this.enabled ? this.color.render() : ""}
+        </tbody>
+      </table>
       <button ${this.defaultAttributes()} class="test-button">Test</button>
-      <div class="form-group" id="activity-${this.name}">
-        <label for="enable-button" class="input-label">Enable activity</label>
-        <input ${this.defaultAttributes()} type="checkbox" class="enable-button" ${this.enabled ? "checked" : ""}/>
-        <div class="settings" ${this.enabled ? "" : "hidden"}>
-          <label for="Select object type" class="input-label">Type of object</label>
-          <select ${this.defaultAttributes()} class="select-type-reference">
-            <option value="light" ${this._type === "light" ? "selected" : ""}>Lamps</option>
-            <option value="room" ${this._type === "room" ? "selected" : ""}>Rooms</option>
-            <option value="zone" ${this._type === "zone" ? "selected" : ""}>Zones</option>
-          </select>
-
-          ${this.lampSettings()}
-          ${this.roomSettings()}
-          ${this.zoneSettings()}
-        </div>
-      </div>
     </div>
     <hr class="separator" />`;
   }
 
-  public lampSettings() {
-    return `<div class="settings light" ${this._type === "light" ? "" : "hidden"}>
-      ${this.referenceSettings(this.view.context.bridge.references.lights, "light")}
-      </div>`;
-  }
+  public renderSettings(type: ReferenceType) {
+    if (this._type !== type) {
+      return "";
+    }
 
-  public roomSettings() {
-    return `<div class="settings room" ${this._type === "room" ? "" : "hidden"}>
-      ${this.referenceSettings(this.view.context.bridge.references.rooms, "room")}
-    </div>`;
-  }
-
-  public zoneSettings() {
-    return `<div class="settings zone" ${this._type === "zone" ? "" : "hidden"}>
-      ${this.referenceSettings(this.view.context.bridge.references.zones, "zone")}
-    </div>`;
+    return this.referenceSettings(this.view.context.bridge.references[type] ?? [], type);
   }
 
   public referenceSettings(references: PropertyTypes[], type: string) {
     const selected = this.action.reference;
 
-    return `
-    <div class="horizontal-flex">
-      <div>
+    return `<tr>
+      <td>
         <label for="select object type" class="input-label">Select ${type}</label>
+      </td>
+      <td></td>
+      <td>
         <select ${this.defaultAttributes()} class="select-reference" type="${type}">
           ${references
             .map(
@@ -223,11 +224,8 @@ export class ActivityElement extends BaseElement<ViewControllerContext<ActivityE
             )
             .join("")}
         </select>
-      </div
-      <div class="color-config">
-        ${this.color.render()}
-      </div>
-    </div>`;
+      </td>
+    </tr>`;
   }
 
   public static script() {
@@ -299,7 +297,20 @@ export class ActivityElement extends BaseElement<ViewControllerContext<ActivityE
     .input-label {
       margin-right: 10px;
     }
-    `;
+
+    .test-button {
+      margin-left: 20px;
+      margin-right: 20px;
+      padding: 5px;
+      background-color: transparent;
+      border: 1px solid var(--vscode-editor-foreground);
+      color: var(--vscode-editor-foreground);
+    }
+
+    .test-button:hover {
+      background-color: var(--vscode-editor-foreground);
+      color: var(--vscode-editor-background);
+    }`;
   }
 }
 

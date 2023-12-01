@@ -77,32 +77,39 @@ export class ColorConfigElement extends BaseElement<ViewControllerContext<ColorC
     }
 
     return `
-    <div class="color-picker-container">
-      <!-- On/Off -->
-      <div>
-        <label for="lamp-enabled" class="input-label">On/Off</label>
-        <input id="lamp-enabled" ${super.defaultAttributes()} type="radio" class="lamp-enable"
-          value="true" ${this.data.on?.on ? "checked" : ""}/>
-      </div>
-      <!-- Color -->
-      <div ${this.mode === "color" ? "hidden" : ""}>
-        <div>
-          <label for="color-picker" class="input-label">Color</label>
-          <input id="color-picker" ${super.defaultAttributes()} type="color" class="color-picker-lamp" value="${color}"/>
-        </div>
-      </div
-      <!-- Dimming -->
-      <div>
-        <label for="dimming" class="input-label">Dimming</label>
-        <input id="dimming" ${super.defaultAttributes()} type="range" class="lamp-dimming"
-          min="0" max="100" value="${this.data.dimming.brightness}"/>
-      </div>
-    </div`;
+      <tr hidden>
+        <td>
+          <label for="lamp-enabled" class="input-label">On/Off</label>
+        </td>
+        <td></td>
+        <td>
+          <input id="lamp-enabled" ${super.defaultAttributes()} type="radio" class="lamp-enable" value="true" ${this.data.on?.on ? "checked" : ""}/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="lamp-disabled" class="input-label">Color</label>
+        </td>
+        <td></td>
+        <td>
+        <input id="color-picker" ${super.defaultAttributes()} type="color" class="color-picker-lamp" value="${color}"/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="lamp-disabled" class="input-label">Dimming</label>
+        </td>
+        <td></td>
+        <td>
+          <input id="dimming" ${super.defaultAttributes()} type="range" class="lamp-dimming"
+            min="0" max="100" value="${this.data.dimming.brightness}"/>
+        </td>
+      </tr>`;
   }
 
   public static script() {
     return `
-    console.log("ColorConfigElement script loaded");
+    // console.log("ColorConfigElement script loaded");
     //Color picker script
 
     // On/Off
@@ -142,6 +149,19 @@ export class ColorConfigElement extends BaseElement<ViewControllerContext<ColorC
       display: flex;
       flex-direction: column;
       padding-left: 10px;
+    }
+
+    .color-picker-lamp {
+      padding: 0;
+      border: none;
+      background: none;
+      outline: none;
+    }
+
+    .lamp-dimming {
+      width: 100%;
+      background: none;
     }`;
+
   }
 }
