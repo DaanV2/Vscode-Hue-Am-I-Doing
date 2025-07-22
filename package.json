@@ -16,7 +16,7 @@
     "url": "https://github.com/DaanV2/Vscode-Hue-Am-I-Doing"
   },
   "engines": {
-    "vscode": "^1.79.0"
+    "vscode": "^1.92.0"
   },
   "categories": [
     "Other",
@@ -58,9 +58,6 @@
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4"
   },
-  "files": [
-    "resources/**/*"
-  ],
   "contributes": {
     "commands": [
       {
