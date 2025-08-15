@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
-import { ExtensionController } from "./extension";
-import { registerCommands } from "./commands";
-import { registerViews } from "./views";
 import { ActivityMonitor } from "./activity";
+import { registerCommands } from "./commands";
+import { ExtensionController } from "./extension";
+import { registerViews } from "./views";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed

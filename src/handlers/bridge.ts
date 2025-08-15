@@ -82,7 +82,7 @@ export class BridgeHandler {
 
   async getReference(): Promise<BridgeReference> {
     return BridgeReference.getData(this.app)
-      .then(v=> {
+      .then((v) => {
         this.config.state = "connected";
         return v;
       })
@@ -117,6 +117,10 @@ export class BridgeHandler {
         case 401:
           this.config.state = "unauthorized";
           return;
+      }
+    } else {
+      if (error.message?.includes("ECONNREFUSED")) {
+        this.config.state = "unauthorized";
       }
     }
   }

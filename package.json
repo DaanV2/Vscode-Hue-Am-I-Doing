@@ -67,10 +67,22 @@
         "icon": "$(diff-insert)"
       },
       {
+        "title": "Clear All Data",
+        "category": "Hue Am I Doing",
+        "command": "hue-am-i-doing.clear-all-data",
+        "icon": "$(trash)"
+      },
+      {
         "title": "Configure Hue Bridge",
         "category": "Hue Am I Doing",
         "command": "hue-am-i-doing.configure-bridge",
         "icon": "$(settings-more-action)"
+      },
+      {
+        "title": "Delete Hue Bridge",
+        "category": "Hue Am I Doing",
+        "command": "hue-am-i-doing.delete-bridge",
+        "icon": "$(trash)"
       }
     ],
     "menus": {
@@ -89,6 +101,11 @@
       "view/item/context": [
         {
           "command": "hue-am-i-doing.configure-bridge",
+          "when": "view == hue-am-i-doing-bridges-view",
+          "group": "inline"
+        },
+        {
+          "command": "hue-am-i-doing.delete-bridge",
           "when": "view == hue-am-i-doing-bridges-view",
           "group": "inline"
         }

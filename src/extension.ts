@@ -18,7 +18,7 @@ export class ExtensionController {
     this.config = new ConfigHandler(context.secrets);
     this.activity = new ActivityHandler();
     this.uri = context.extensionUri;
-    const assetsFolder =  vscode.Uri.joinPath(this.uri, "assets");
+    const assetsFolder = vscode.Uri.joinPath(this.uri, "assets");
     this.assets = {
       base: assetsFolder,
       hueIcons: new Icons(assetsFolder),
@@ -29,14 +29,14 @@ export class ExtensionController {
 
   public async setup(): Promise<void> {
     this.activity.on("afterActivity", () => this.saveConfig());
+    this.activity.on("afterBridgedDeleted", () => this.saveConfig());
 
     //Migration of config
     this.activity.on("onBridgedAdded", async (parent, bridge) => {
       if (await migrateConfig(bridge)) {
-        this.saveConfig();
+        return this.saveConfig();
       }
     });
-
 
     const config = await this.config.get<BridgeConfig[]>(BRIDGE_CONFIG_KEY);
 

@@ -8,6 +8,7 @@ export type ActionType = keyof ActivitiesConfig;
 export interface ActivityEvents {
   afterActivity: (parent: ActivityHandler) => void;
   onBridgedAdded: (parent: ActivityHandler, bridge: BridgeHandler) => void;
+  afterBridgedDeleted: (parent: ActivityHandler, bridgeId: string) => void;
 }
 
 export class ActivityHandler extends Events<ActivityEvents> {
@@ -50,6 +51,11 @@ export class ActivityHandler extends Events<ActivityEvents> {
 
   public getBridge(id: string): BridgeHandler | undefined {
     return this.apps.find((item) => item.config.bridgeId === id);
+  }
+
+  public deleteBridge(id: string) {
+    this.apps = this.apps.filter((item) => item.config.bridgeId !== id);
+    this.call("afterBridgedDeleted", this, id);
   }
 
   public getConfig() {

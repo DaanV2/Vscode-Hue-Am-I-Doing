@@ -9,16 +9,23 @@ export interface BridgeItem {
 
 export class BridgesTreeView implements vscode.TreeDataProvider<BridgeItem> {
   private readonly ext: ExtensionController;
+  private readonly _onDidChangeTreeData: vscode.EventEmitter<void | BridgeItem | BridgeItem[] | null | undefined>;
 
   constructor(ext: ExtensionController) {
     this.ext = ext;
+
+    this._onDidChangeTreeData = new vscode.EventEmitter();
+
+    this.ext.activity.on("afterBridgedDeleted", () => this._onDidChangeTreeData.fire());
+    this.ext.activity.on("onBridgedAdded", () => this._onDidChangeTreeData.fire())
   }
 
-  onDidChangeTreeData?: vscode.Event<void | BridgeItem | BridgeItem[] | null | undefined> | undefined;
+  get onDidChangeTreeData() {
+    return this._onDidChangeTreeData.event;
+  }
 
   getTreeItem(element: BridgeItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
     const { bridge, state } = element;
-
     let strState = "❔";
 
     switch (state) {
