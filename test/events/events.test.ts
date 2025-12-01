@@ -15,8 +15,8 @@ describe("Event Handler", () => {
     events.on("test1", handler);
     events.call("test1", "test", 1);
 
-    expect(handler).toBeCalledTimes(1);
-    expect(handler).toBeCalledWith("test", 1);
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledWith("test", 1);
   });
 
   test("If a multiple handlers are registered, they should all be called when the event is called", () => {
@@ -28,11 +28,11 @@ describe("Event Handler", () => {
     events.on("test1", handler2);
     events.call("test1", "test", 1);
 
-    expect(handler1).toBeCalledTimes(1);
-    expect(handler1).toBeCalledWith("test", 1);
+    expect(handler1).toHaveBeenCalledTimes(1);
+    expect(handler1).toHaveBeenCalledWith("test", 1);
 
-    expect(handler2).toBeCalledTimes(1);
-    expect(handler2).toBeCalledWith("test", 1);
+    expect(handler2).toHaveBeenCalledTimes(1);
+    expect(handler2).toHaveBeenCalledWith("test", 1);
   });
 
   test("If multiple events over multiple handlers are registered, they should all be called when the event is called", () => {
@@ -45,11 +45,11 @@ describe("Event Handler", () => {
     events.call("test1", "test", 1);
     events.call("test2", "test", 1);
 
-    expect(handler1).toBeCalledTimes(1);
-    expect(handler1).toBeCalledWith("test", 1);
+    expect(handler1).toHaveBeenCalledTimes(1);
+    expect(handler1).toHaveBeenCalledWith("test", 1);
 
-    expect(handler2).toBeCalledTimes(1);
-    expect(handler2).toBeCalledWith("test", 1);
+    expect(handler2).toHaveBeenCalledTimes(1);
+    expect(handler2).toHaveBeenCalledWith("test", 1);
   });
 
   test("If events are cleared, they should not be called when the event is called", () => {
@@ -60,7 +60,7 @@ describe("Event Handler", () => {
     events.clearEvents();
     events.call("test1", "test", 1);
 
-    expect(handler).toBeCalledTimes(0);
+    expect(handler).toHaveBeenCalledTimes(0);
   });
 
   test("If specific event is cleared, it should not be called when the event is called", () => {
@@ -74,9 +74,9 @@ describe("Event Handler", () => {
     events.call("test1", "test", 1);
     events.call("test2", "test", 1);
 
-    expect(handler1).toBeCalledTimes(0);
+    expect(handler1).toHaveBeenCalledTimes(0);
 
-    expect(handler2).toBeCalledTimes(1);
-    expect(handler2).toBeCalledWith("test", 1);
+    expect(handler2).toHaveBeenCalledTimes(1);
+    expect(handler2).toHaveBeenCalledWith("test", 1);
   });
 });
